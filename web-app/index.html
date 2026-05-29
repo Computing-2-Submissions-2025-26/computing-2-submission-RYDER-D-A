@@ -1,9 +1,136 @@
-<!-- In HTML Comments are written like this -->
-<!-- They can all be removed for your apps -->
-<!doctype html> <!-- This first line tells browsers to expect modern standard html 5 -->
-<html lang="en-gb"> <!-- This is indicates the page is written in British English, useful for accessibility -->
-<meta charset="utf-8"> <!-- This indicates how the file is encoded. utf-8 is standard -->
-<title>Your Web-app Title</title> <!-- All pages need a title, this will be displayed in the browser's title bar -->
-<link rel="stylesheet" href="default.css"> <!-- Import style sheet – default.css -->
-<link rel="icon" href="./assets/favicon.png"> <!-- Import 'Favorites Icon' – favicon.png -->
-<script type="module" src="main.js"></script> <!-- Load the main script. Must be type="module". Have only one of these -->
+<!doctype html>
+<html lang ="en-gb">
+	<head>
+		<meta charset="utf-8">
+		<title>Your Web-app Title</title>
+		<link rel="stylesheet" href="default.css">
+		<link rel="icon" href="./assets/favicon.png">
+		<link href="https://fonts.googleapis.com/css2?family=Jaro&family=Itim&display=swap" rel="stylesheet">
+		<script type="module" src="main.js"></script>
+	</head>
+	<body>
+		<div class="TitleScreen screen" >
+			<h1>Battle Ships</h1>
+			<div class="ButtonWrap">
+				<button>Start</button>
+			</div>
+		</div>
+		<div class="PlaceScreen1 screen hidden">
+			<div class="TopSection">
+				<h1>Player 1</h1>
+			</div>
+			<div class="Done done1 hidden">
+				<button>Done</button>
+			</div>
+			<div class="BottomSection">
+				<div class="ShipSelect">
+					<h3>Gun Boat</h3>
+					<div class="ship" id="GunBoat" draggable="true">
+						<div class="ShipNode"></div>
+						<div class="ShipNode"></div>
+					</div>
+					<h3>Brig</h3>
+					<div class="ship" id="Brig" draggable="true">
+						<div class="ShipNode"></div>
+						<div class="ShipNode"></div>
+						<div class="ShipNode"></div>
+					</div>
+					<h3>Schooner</h3>
+					<div class="ship" id="Schooner" draggable="true">
+						<div class="ShipNode"></div>
+						<div class="ShipNode"></div>
+						<div class="ShipNode"></div>
+					</div>
+					<h3>Frigate</h3>
+					<div class="ship" id="Frigate" draggable="true">
+						<div class="ShipNode"></div>
+						<div class="ShipNode"></div>
+						<div class="ShipNode"></div>
+						<div class="ShipNode"></div>
+					</div>
+					<h3>Man O'War</h3>
+					<div class="ship" id="ManOWar" draggable="true">
+						<div class="ShipNode"></div>
+						<div class="ShipNode"></div>
+						<div class="ShipNode"></div>
+						<div class="ShipNode"></div>
+						<div class="ShipNode"></div>
+					</div>
+				</div>
+				<div class="PlayGrid">
+
+				</div>
+			</div>
+		</div>
+		<div class="PlaceScreen2 screen hidden">
+			<div class="TopSection">
+                <h1>Player 2</h1>
+            </div>
+            <div class="Done done2 hidden">
+				<button>Done</button>
+			</div>
+            <div class="BottomSection">
+                <div class="ShipSelect">
+					<h3>Gun Boat</h3>
+					<div class="ship" id="GunBoat" draggable="true">
+						<div class="ShipNode"></div>
+						<div class="ShipNode"></div>
+					</div>
+					<h3>Brig</h3>
+					<div class="ship" id="Brig" draggable="true">
+						<div class="ShipNode"></div>
+						<div class="ShipNode"></div>
+						<div class="ShipNode"></div>
+					</div>
+					<h3>Schooner</h3>
+					<div class="ship" id="Schooner" draggable="true">
+						<div class="ShipNode"></div>
+						<div class="ShipNode"></div>
+						<div class="ShipNode"></div>
+					</div>
+					<h3>Frigate</h3>
+					<div class="ship" id="Frigate" draggable="true">
+						<div class="ShipNode"></div>
+						<div class="ShipNode"></div>
+						<div class="ShipNode"></div>
+						<div class="ShipNode"></div>
+					</div>
+					<h3>Man O'War</h3>
+					<div class="ship" id="ManOWar" draggable="true">
+						<div class="ShipNode"></div>
+						<div class="ShipNode"></div>
+						<div class="ShipNode"></div>
+						<div class="ShipNode"></div>
+						<div class="ShipNode"></div>
+					</div>
+				</div>
+                <div class="PlayGrid"></div>
+            </div>
+		</div>
+        <div class="PlayScreen screen hidden">
+            <h1 id="turnIndicator"></h1>
+        </div>
+        <button class="HelpBtn hidden">?</button>
+        <div class="Help hidden">
+            <p>Placement rules content here</p>
+        </div>
+        <div class="Help hidden">
+            <p>Battle rules content here</p>
+        </div>
+
+
+
+        <div class="GridBorder">
+            <div id="Player1Grid" class="grid hidden"></div>
+        </div>
+        <div class="GridBorder">
+            <div id="Player2Grid" class="grid hidden"></div>
+        </div>
+
+        <div class="VictoryScreen screen hidden">
+            <h1>Victory!</h1>
+            <h2 id="winnerText"></h2>
+            <h3 id="winRatio"></h3>
+        </div>
+	</body>
+</html>

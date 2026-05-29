@@ -1,0 +1,337 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.screen {
+    z-index: 1;
+    margin: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.hidden {
+    display: none !important;
+}
+/*======================================================
+___________________Title Screen_____________________
+========================================================*/
+.TitleScreen {
+    background: 
+        linear-gradient(to bottom, rgba(97, 146, 153, 0.4) 72%, rgba(245, 245, 245, 0.4) 100%),
+        linear-gradient(to bottom, #032F9E 27%, #F5F5F5 100%); /* layers the two gradients */
+        
+    /*Posisitons elements */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    
+}
+
+
+.TitleScreen h1 {
+    font-family: 'Jaro' ;
+    font-size: 200px;
+    color: #F5F5F5;
+}
+
+.ButtonWrap {
+    background-color: #000000;
+    padding: 4px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    clip-path: polygon(
+        30px 0%,
+        calc(100% - 30px) 0%,
+        100% 30px,
+        100% calc(100% - 30px),
+        calc(100% - 30px) 100%,
+        30px 100%,
+        0% calc(100% - 30px),
+        0% 30px
+    );
+}
+.ButtonWrap:hover {
+    transform: scale(1.05);
+    transition: transform 0.1s ease;
+}
+.ButtonWrap:active {
+    transform: scale(0.95);
+    transition: transform 0.05s ease;
+}
+
+.TitleScreen button {
+    font-family: 'Itim';
+    font-size: 128px;
+    width: 708.25px;
+    height: 156px;
+    color: #F5F5F5;
+    background-color: #FF5858;
+    border: none;
+    clip-path: polygon(
+        30px 0%,
+        calc(100% - 30px) 0%,
+        100% 30px,
+        100% calc(100% - 30px),
+        calc(100% - 30px) 100%,
+        30px 100%,
+        0% calc(100% - 30px),
+        0% 30px
+    );
+}
+
+/*=================================================
+_______________________Placement screen 1________________________
+=====================================================*/
+.PlaceScreen1 {
+    position: relative;
+    background:
+        linear-gradient(to bottom, rgba(97, 146, 153, 0.4) 72%, rgba(245, 245, 245, 0.4) 100%),
+        linear-gradient(to bottom, #032F9E 0%, #032F9E 100%);
+}
+
+
+.BottomSection {
+    display: flex;
+    flex-direction: row;
+    height: 80vh;
+}
+
+.TopSection h1 {
+    position:absolute;
+    top: 0px;
+    left: 20px;
+    font-family: 'Jaro' ;
+    font-size: 21vh;
+    color: #F5F5F5;
+    z-index: 4;
+}
+ .HelpBtn {
+    z-index: 10;
+    position: fixed;
+    top: 6vh;
+    right: 6vh;
+    color: #F5F5F5;
+    font-family: 'Itim';
+    font-size: 6vh;
+    background-color: #606264;  /* inner dark grey */
+    border: 1vh solid #9a9a9a;  /* middle lighter grey ring */
+    outline: 0.5vh solid #000000; /* outer black line */
+    border-radius: 8px;
+    width: 8.5vh;
+    height: 8.5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.HelpBtn:hover {
+    transform: scale(1.1);
+    transition: transform 0.1s ease;
+}
+.Done button { 
+    position:  absolute;
+    top: 16vh;
+    right: 6vh;
+    color: #F5F5F5;
+    background-color: #FF5858;
+    border: 3px solid #000000;
+    width: 22vh;
+    height: 7vh;
+    font-family: 'Itim';
+    font-size: 5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.Done button:hover {
+    transform: scale(1.05);
+    transition: transform 0.1s ease;
+}
+.Done button:active {
+    transform: scale(0.95);
+    transition: transform 0.05s ease;
+}
+.ShipSelect {
+    border-radius: 15px;
+    position: absolute;
+    top: 23.5%; /* starts partway down */
+    left: 20px;
+    width: 25%;
+    height: 72.5%;
+    background-color: #606264;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.Help {
+    z-index: 9;
+    position: fixed;
+    top: 5vh;
+    right: 5vh; 
+    background-color: #606264;
+    border: 3px solid #000000;
+    border-radius: 2%;
+    width: 40vw;
+    height: 30vh;
+}
+/*=================================================
+_______________________Placement screen 2________________________
+=====================================================*/
+.PlaceScreen2 {
+    position: relative;
+    background:
+        linear-gradient(to bottom, rgba(97, 146, 153, 0.4) 72%, rgba(245, 245, 245, 0.4) 100%),
+        linear-gradient(to bottom, #032F9E 0%, #032F9E 100%);
+}
+/*===================================================
+__________________________Play Screen__________________________
+=====================================================*/
+.PlayScreen {
+    position: relative;
+    background:
+        linear-gradient(to bottom, rgba(97, 146, 153, 0.4) 72%, rgba(245, 245, 245, 0.4) 100%),
+        linear-gradient(to bottom, #032F9E 0%, #032F9E 100%);
+}
+
+.PlayScreen h1 {
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Jaro' ;
+    font-size: 200px;
+    color: #F5F5F5;
+}
+/*=====================================================
+_____________________Ships_____________________________
+=======================================================*/
+.ship {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.ShipSelect h3 {
+    font-family: 'Itim';
+    color: #F5F5F5;
+    font-size: 4vh;
+}
+
+.ShipNode {
+    width: calc(60vw / 11);
+    height: calc(60vh / 11);
+}
+
+#GunBoat  { background-image: url('./assets/GunBoat.svg');   width: calc(22vw / 5 * 2); }
+#Brig     { background-image: url('./assets/Brig.svg');      width: calc(22vw / 5 * 3); }
+#Schooner { background-image: url('./assets/Schooner.svg');  width: calc(22vw / 5 * 3); }
+#Frigate  { background-image: url('./assets/Frigate.svg');   width: calc(22vw / 5 * 4); }
+#ManOWar  { background-image: url('./assets/Man o War.svg'); width: calc(22vw / 5 * 5); }
+
+/*=====================================================
+______________________Grid_____________________________
+========================================================*/
+.grid {
+    z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(11, 1fr);
+    width: 60%;
+    height: 60%;
+    position: fixed;
+    bottom:10vh;
+    right: 7.5vw;
+    outline: 10px  #03482A;
+    border-radius: 2%;
+    overflow: hidden;
+}
+
+.play-grid {
+    width: 43vw;
+    height: 55vh;
+    top: 30vh;
+    bottom: auto;
+    right: auto;
+}
+
+#Player1Grid.play-grid { right: 3vw; }
+#Player2Grid.play-grid { left: 3vw; }
+
+.inactive-grid { opacity: 0.4; }
+
+.VictoryScreen {
+    background:
+        linear-gradient(to bottom, rgba(97, 146, 153, 0.4) 72%, rgba(245, 245, 245, 0.4) 100%),
+        linear-gradient(to bottom, #032F9E 0%, #032F9E 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.VictoryScreen h1 {
+    font-family: 'Jaro';
+    font-size: 20vh;
+    color: #F5F5F5;
+}
+
+.VictoryScreen h2 {
+    font-family: 'Itim';
+    font-size: 8vh;
+    color: #F5F5F5;
+}
+
+.VictoryScreen h3 {
+    font-family: 'Itim';
+    font-size: 4vh;
+    color: #F5F5F5;
+    margin-top: 2vh;
+}
+
+#turnIndicator {
+    font-family: 'Jaro';
+    font-size: 8vh;
+    color: #F5F5F5;
+    position: absolute;
+    top: 2vh;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.play-grid .header {
+    font-size: 2vh;
+}
+
+.cell {
+    background-color: #03482A;
+    border-right: 1px solid #3ABE86;
+    border-bottom: 1px solid #3ABE86;
+}
+.cell.hit  { background-color: #CC0000; }
+.cell.miss { background-color: #032F9E; }
+.cell:nth-last-child(-n+11){
+    border-bottom:none;
+}
+.cell:nth-child(11n){
+    border-right: none
+}
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Jaro';
+    font-size: 4vh;
+    color: #F5F5F5;
+}
