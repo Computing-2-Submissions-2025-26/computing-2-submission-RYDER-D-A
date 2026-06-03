@@ -7,21 +7,31 @@ if (!sessionStorage.getItem('gameReload')) {
 sessionStorage.removeItem('gameReload');
 
 /*_________________Button CLicking____________*/
+
+const sfxClick = new Audio('./assets/Menu Selection Click.wav');
 const startButton = document.querySelector('.ButtonWrap button');
 const Player1Grid = document.getElementById('Player1Grid');
 let currentHelpIndex = 0;
 
+const bgMusic = new Audio('./assets/Pirate1_Theme1.ogg');
+bgMusic.loop = true;
+bgMusic.volume = 0.3;
+
 startButton.addEventListener('click', function() {
+    bgMusic.play();
     document.querySelector('.TitleScreen').classList.add('hidden');
     document.querySelector('.PlaceScreen1').classList.remove('hidden');
     Player1Grid.classList.remove('hidden');
     document.querySelector('.HelpBtn').classList.remove('hidden');
+    sfxClick.currentTime = 0; sfxClick.play();
 });
 
 const SelectDone1Button = document.querySelector('.done1 button');
 const Player2Grid = document.getElementById('Player2Grid');
 
 SelectDone1Button.addEventListener('click', function() {
+    sfxClick.currentTime = 0; sfxClick.play();
+    sfxClick.currentTime = 0; sfxClick.play();
     document.querySelector('.PlaceScreen1').classList.add('hidden');
     document.querySelector('.PlaceScreen2').classList.remove('hidden');
     Player1Grid.classList.add('hidden');
@@ -34,6 +44,7 @@ SelectDone1Button.addEventListener('click', function() {
 const SelectDone2Button = document.querySelector('.done2 button');
 
 SelectDone2Button.addEventListener('click', function() {
+    sfxClick.currentTime = 0; sfxClick.play();
     document.querySelector('.PlaceScreen2').classList.add('hidden');
     document.querySelector('.PlayScreen').classList.remove('hidden');
     currentHelpIndex = 1;
@@ -53,6 +64,12 @@ function setupGame() {
     let currentPlayer = 1;
     let p1NodesRemaining = 17;
     let p2NodesRemaining = 17;
+
+    const sfxSplash    = new Audio('./assets/watersplash2.flac');
+    const sfxHit       = new Audio('./assets/synthetic_explosion_1.flac');
+    const sfxSink      = new Audio('./assets/Chunky Explosion.mp3');
+    const sfxVictory   = new Audio('./assets/Lively Meadow Victory Fanfare.mp3');
+    const sunkenShips  = new Set();
 
     const p1Grid = document.getElementById('Player1Grid');
     const p2Grid = document.getElementById('Player2Grid');
@@ -80,7 +97,9 @@ function setupGame() {
         document.getElementById('winnerText').textContent = winner + ' Wins!';
         document.getElementById('winRatio').textContent = newP1 + ':' + newP2;
         document.querySelector('.VictoryScreen').classList.remove('hidden');
-        const reloadTimeout = setTimeout(function() { sessionStorage.setItem('gameReload', '1'); location.reload(); }, 5000);
+        bgMusic.pause();
+        sfxVictory.play();
+        const reloadTimeout = setTimeout(function() { sessionStorage.setItem('gameReload', '1'); location.reload(); }, 8000);
         document.querySelector('.VictoryScreen').addEventListener('click', function() {
             clearTimeout(reloadTimeout);
             sessionStorage.setItem('gameReload', '1');
@@ -94,6 +113,19 @@ function setupGame() {
 
         if (occupiedCells.has(cell.id)) {
             cell.classList.add('hit');
+
+            let shipSunk = false;
+            shipCells.forEach(function(cells, ship) {
+                if (!sunkenShips.has(ship) && cells.includes(cell.id) && cells.every(id => firedCells.has(id))) {
+                    sunkenShips.add(ship);
+                    shipSunk = true;
+                }
+            });
+
+            sfxSink.currentTime = 0;
+            sfxHit.currentTime = 0;
+            if (shipSunk) { sfxSink.play(); } else { sfxHit.play(); }
+
             if (cell.id.startsWith('Player1Grid')) {
                 p1NodesRemaining--;
                 if (p1NodesRemaining === 0) { showVictory('Player 2'); return; }
@@ -103,6 +135,8 @@ function setupGame() {
             }
         } else {
             cell.classList.add('miss');
+            sfxSplash.currentTime = 0;
+            sfxSplash.play();
         }
 
         currentPlayer = currentPlayer === 1 ? 2 : 1;
@@ -173,6 +207,9 @@ createGrid('Player1Grid');
 createGrid('Player2Grid');
 
 /*_____________________Drag and Drop________________*/
+const sfxPlace = new Audio('./assets/slime_jump.mp3');
+sfxPlace.volume = 0.4;
+
 const shipSVGs = {
     'GunBoat':  './assets/GunBoat.svg',
     'Brig':     './assets/Brig.svg',
@@ -213,6 +250,7 @@ function endDrag(placed) {
             draggedShip.style.opacity = '1';
         }
     }
+    if (placed) { sfxPlace.currentTime = 0; sfxPlace.play(); }
     previousCells = [];
     draggedShip = null;
     checkAllShipsPlaced();

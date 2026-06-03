@@ -176,12 +176,18 @@ _______________________Placement screen 1________________________
     z-index: 9;
     position: fixed;
     top: 5vh;
-    right: 5vh; 
+    right: 5vh;
     background-color: #606264;
     border: 3px solid #000000;
     border-radius: 2%;
     width: 40vw;
-    height: 30vh;
+    height: 12.5vh;
+    padding: 2vh 16vh 2vh 2vh;
+}
+
+.Help p {
+    color: #F5F5F5;
+    font-family: 'Itim';
 }
 /*=================================================
 _______________________Placement screen 2________________________
@@ -211,6 +217,16 @@ __________________________Play Screen__________________________
     font-family: 'Jaro' ;
     font-size: 200px;
     color: #F5F5F5;
+}
+
+#turnIndicator {
+    font-family: 'Jaro';
+    font-size: 15vh;
+    color: #F5F5F5;
+    position: absolute;
+    top: 2vh;
+    left: 50%;
+    transform: translateX(-50%);
 }
 /*=====================================================
 _____________________Ships_____________________________
@@ -265,7 +281,9 @@ ______________________Grid_____________________________
     bottom: auto;
     right: auto;
 }
-
+.play-grid .header {
+    font-size: 2vh;
+}
 #Player1Grid.play-grid { right: 3vw; }
 #Player2Grid.play-grid { left: 3vw; }
 
@@ -300,19 +318,9 @@ ______________________Grid_____________________________
     margin-top: 2vh;
 }
 
-#turnIndicator {
-    font-family: 'Jaro';
-    font-size: 8vh;
-    color: #F5F5F5;
-    position: absolute;
-    top: 2vh;
-    left: 50%;
-    transform: translateX(-50%);
-}
 
-.play-grid .header {
-    font-size: 2vh;
-}
+
+
 
 .cell {
     background-color: #03482A;
