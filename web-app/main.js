@@ -1,4 +1,11 @@
 import R from "./ramda.js";
+import {
+    createGameState,
+    hasBeenFired,
+    fireAt as computeShot,
+    countShipsPlaced,
+    getCurrentPlayer
+} from "./BattleShips.js";
 
 if (!sessionStorage.getItem('gameReload')) {
     localStorage.setItem('p1Wins', '0');
@@ -60,24 +67,23 @@ SelectDone2Button.addEventListener('click', function() {
 
 /*_____________________Game________________*/
 function setupGame() {
-    const firedCells = new Set();
-    let currentPlayer = 1;
-    let p1NodesRemaining = 17;
-    let p2NodesRemaining = 17;
+    const occupiedArray = Array.from(occupiedCells);
+    const shipCellsArray = Array.from(shipCells.values());
+    let gameState = createGameState(occupiedArray, shipCellsArray);
 
-    const sfxSplash    = new Audio('./assets/watersplash2.flac');
-    const sfxHit       = new Audio('./assets/synthetic_explosion_1.flac');
-    const sfxSink      = new Audio('./assets/Chunky Explosion.mp3');
-    const sfxVictory   = new Audio('./assets/Lively Meadow Victory Fanfare.mp3');
-    const sunkenShips  = new Set();
+    const sfxSplash  = new Audio('./assets/watersplash2.flac');
+    const sfxHit     = new Audio('./assets/synthetic_explosion_1.flac');
+    const sfxSink    = new Audio('./assets/Chunky Explosion.mp3');
+    const sfxVictory = new Audio('./assets/Lively Meadow Victory Fanfare.mp3');
 
     const p1Grid = document.getElementById('Player1Grid');
     const p2Grid = document.getElementById('Player2Grid');
 
     function updateActiveGrid() {
-        p1Grid.classList.toggle('inactive-grid', currentPlayer === 1);
-        p2Grid.classList.toggle('inactive-grid', currentPlayer === 2);
-        document.getElementById('turnIndicator').textContent = 'Player ' + currentPlayer + '\'s Turn';
+        const player = getCurrentPlayer(gameState);
+        p1Grid.classList.toggle('inactive-grid', player === 1);
+        p2Grid.classList.toggle('inactive-grid', player === 2);
+        document.getElementById('turnIndicator').textContent = 'Player ' + player + '\'s Turn';
     }
 
     function showVictory(winner) {
@@ -90,7 +96,7 @@ function setupGame() {
 
         document.querySelector('.PlayScreen').classList.add('hidden');
         document.querySelector('.HelpBtn').classList.add('hidden');
-        document.querySelectorAll('.Help').forEach(el => el.classList.add('hidden'));
+        document.querySelectorAll('.Help').forEach(function(el) { el.classList.add('hidden'); });
         p1Grid.classList.add('hidden');
         p2Grid.classList.add('hidden');
 
@@ -107,48 +113,37 @@ function setupGame() {
         }, { once: true });
     }
 
-    function fireAt(cell) {
-        if (firedCells.has(cell.id)) return;
-        firedCells.add(cell.id);
+    function handleShot(cell) {
+        if (hasBeenFired(gameState, cell.id)) { return; }
 
-        if (occupiedCells.has(cell.id)) {
+        const result = computeShot(gameState, cell.id);
+        gameState = result.state;
+
+        if (result.hit) {
             cell.classList.add('hit');
-
-            let shipSunk = false;
-            shipCells.forEach(function(cells, ship) {
-                if (!sunkenShips.has(ship) && cells.includes(cell.id) && cells.every(id => firedCells.has(id))) {
-                    sunkenShips.add(ship);
-                    shipSunk = true;
-                }
-            });
-
-            sfxSink.currentTime = 0;
-            sfxHit.currentTime = 0;
-            if (shipSunk) { sfxSink.play(); } else { sfxHit.play(); }
-
-            if (cell.id.startsWith('Player1Grid')) {
-                p1NodesRemaining--;
-                if (p1NodesRemaining === 0) { showVictory('Player 2'); return; }
+            if (result.sunk) {
+                sfxSink.currentTime = 0;
+                sfxSink.play();
             } else {
-                p2NodesRemaining--;
-                if (p2NodesRemaining === 0) { showVictory('Player 1'); return; }
+                sfxHit.currentTime = 0;
+                sfxHit.play();
             }
+            if (result.winner) { showVictory(result.winner); return; }
         } else {
             cell.classList.add('miss');
             sfxSplash.currentTime = 0;
             sfxSplash.play();
         }
 
-        currentPlayer = currentPlayer === 1 ? 2 : 1;
         updateActiveGrid();
     }
 
     function onGridClick(firingPlayer) {
         return function(e) {
-            if (currentPlayer !== firingPlayer) return;
+            if (getCurrentPlayer(gameState) !== firingPlayer) { return; }
             const cell = e.target;
-            if (!cell.classList.contains('cell') || cell.classList.contains('header')) return;
-            fireAt(cell);
+            if (!cell.classList.contains('cell') || cell.classList.contains('header')) { return; }
+            handleShot(cell);
         };
     }
 
@@ -227,11 +222,9 @@ const shipCells = new Map();
 const rows = ['A','B','C','D','E','F','G','H','I','J'];
 
 function checkAllShipsPlaced() {
-    let p1Count = 0, p2Count = 0;
-    shipCells.forEach(function(cells) {
-        if (cells[0].startsWith('Player1Grid')) p1Count++;
-        else p2Count++;
-    });
+    const cellsArray = Array.from(shipCells.values());
+    const p1Count = countShipsPlaced(cellsArray, 'Player1Grid');
+    const p2Count = countShipsPlaced(cellsArray, 'Player2Grid');
     document.querySelector('.done1').classList.toggle('hidden', p1Count < 5);
     document.querySelector('.done2').classList.toggle('hidden', p2Count < 5);
 }
