@@ -2,8 +2,11 @@
   "name": "computing-2-submission",
   "type": "module",
   "version": "1.0.0",
+  "scripts": {
+    "test": "mocha"
+  },
   "description": "",
-  "main": "web-app/Module.js",
+  "main": "web-app/BattleShips.js",
   "author": "",
   "license": "ISC",
   "dependencies": {
