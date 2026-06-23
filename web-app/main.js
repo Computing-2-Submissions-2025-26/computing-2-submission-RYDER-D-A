@@ -124,6 +124,7 @@ function setupGame() {
             if (result.sunk) {
                 sfxSink.currentTime = 0;
                 sfxSink.play();
+                showSunkShip(cell.id);
             } else {
                 sfxHit.currentTime = 0;
                 sfxHit.play();
@@ -202,6 +203,53 @@ createGrid('Player1Grid');
 createGrid('Player2Grid');
 
 /*_____________________Drag and Drop________________*/
+const crackedSVGs = {
+    'GunBoat': './assets/Cgunboat.svg',
+    'Brig':    './assets/Cbrig.svg',
+    'Schooner':'./assets/CSchooner.svg',
+    'Frigate': './assets/Cfrigate.svg',
+    'ManOWar': './assets/CmanOwar.svg'
+};
+
+function showSunkShip(hitCellId) {
+    shipCells.forEach(function(cells, ship) {
+        if (!cells.includes(hitCellId)) { return; }
+
+        const firstEl  = document.getElementById(cells[0]);
+        const firstRect = firstEl.getBoundingClientRect();
+        const cellW = firstRect.width;
+        const cellH = firstRect.height;
+        const nodeCount = cells.length;
+
+        const firstRow  = cells[0].split('_')[1][0];
+        const secondRow = cells[1].split('_')[1][0];
+        const isVertical = firstRow !== secondRow;
+
+        const overlay = new Image();
+        overlay.src = crackedSVGs[ship.id];
+        overlay.style.position = 'fixed';
+        overlay.style.pointerEvents = 'none';
+        overlay.style.zIndex = '6';
+
+        if (!isVertical) {
+            overlay.style.width  = (cellW * nodeCount) + 'px';
+            overlay.style.height = cellH + 'px';
+            overlay.style.left   = firstRect.left + 'px';
+            overlay.style.top    = firstRect.top + 'px';
+        } else {
+            const W = cellH * nodeCount;
+            const H = cellW;
+            overlay.style.width     = W + 'px';
+            overlay.style.height    = H + 'px';
+            overlay.style.transform = 'rotate(-90deg)';
+            overlay.style.left      = (firstRect.left + H / 2 - W / 2) + 'px';
+            overlay.style.top       = (firstRect.top  + W / 2 - H / 2) + 'px';
+        }
+
+        document.body.appendChild(overlay);
+    });
+}
+
 const sfxPlace = new Audio('./assets/slime_jump.mp3');
 sfxPlace.volume = 0.4;
 
